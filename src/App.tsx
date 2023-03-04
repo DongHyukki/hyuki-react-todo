@@ -34,11 +34,11 @@ export default class App extends Component<any, any> {
     float: "right"
   } as CSSProperties
 
-  private getStyle(): CSSProperties {
+  private getStyle(completed: boolean): React.CSSProperties {
     return {
       padding: "10px",
       borderBottom: "1px #ccc dotted",
-      textDecoration: 'none',
+      textDecoration: completed ? 'line-through' : 'none'
     }
   }
 
@@ -80,8 +80,9 @@ export default class App extends Component<any, any> {
             <h1> 할일 목록 </h1>
           </div>
           {this.state.todoData.map((todo) => (
-              <div style={this.getStyle()} key={todo.id}>
-                <input type="checkbox" defaultChecked={todo.completed}/>
+              <div style={this.getStyle(todo.completed)} key={todo.id}>
+                <input type="checkbox" defaultChecked={todo.completed}
+                       onChange={() => this.handleCompleteChange(todo.id)}/>
                 {todo.title}
                 <button style={this.btnStyle} onClick={() => this.deleteTodo(todo.id)}>x</button>
               </div>
@@ -128,6 +129,20 @@ export default class App extends Component<any, any> {
     this.setState({
       todoData: newTodoData,
       insertTodoText: ""
+    })
+  }
+
+  private handleCompleteChange(id: number) {
+    this.setState({
+      todoData: this.state.todoData.map(
+        (todo) => {
+          if (todo.id === id) {
+            todo.completed = !todo.completed
+          }
+
+          return todo
+        }
+      )
     })
   }
 }
