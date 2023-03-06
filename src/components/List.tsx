@@ -1,23 +1,6 @@
-import React, {CSSProperties, useEffect, useState} from 'react';
+import React from 'react';
 
 function List({todoData, setTodoData}: any) {
-
-  const btnStyle = {
-    color: "#fff",
-    border: "none",
-    padding: "5px 9px",
-    borderRadius: "50%",
-    cursor: "pointer",
-    float: "right"
-  } as CSSProperties
-
-  function getStyle(completed: boolean): React.CSSProperties {
-    return {
-      padding: "10px",
-      borderBottom: "1px #ccc dotted",
-      textDecoration: completed ? 'line-through' : 'none'
-    }
-  }
 
   function deleteTodo(id: string) {
     let filteredTodoData = todoData.filter((data: any) => data.id !== id)
@@ -41,11 +24,18 @@ function List({todoData, setTodoData}: any) {
   return (
     <div>
       {todoData.map((todo: any) => (
-          <div style={getStyle(todo.completed)} key={todo.id}>
-            <input type="checkbox" defaultChecked={todo.completed}
-                   onChange={() => handleCompleteChange(todo.id)}/>
-            {todo.title}
-            <button style={btnStyle} onClick={() => deleteTodo(todo.id)}>x</button>
+          <div key={todo.id}>
+            <div
+              className="flex items-center justify-between w-full px-4 py1 my-2 text-gray-600 bg-gray-100 border rounded">
+              <div>
+                <input type="checkbox" defaultChecked={todo.completed}
+                       onChange={() => handleCompleteChange(todo.id)}/>
+                <span className={todo.completed ? "line-through" : undefined}> {todo.title} </span>
+              </div>
+              <div>
+                <button onClick={() => deleteTodo(todo.id)}>x</button>
+              </div>
+            </div>
           </div>
         )
       )}</div>
