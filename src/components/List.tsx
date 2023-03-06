@@ -1,17 +1,18 @@
 import React from 'react';
-import {DragDropContext, Draggable, Droppable, DropResult, OnDragEndResponder} from "react-beautiful-dnd";
+import {DragDropContext, Draggable, Droppable, DropResult} from "react-beautiful-dnd";
+import TodoData from "../types/TodoData";
 
 function List({todoData, setTodoData}: any) {
 
   function deleteTodo(id: string) {
-    let filteredTodoData = todoData.filter((data: any) => data.id !== id)
+    let filteredTodoData = todoData.filter((data: TodoData) => data.id !== id)
     console.log(filteredTodoData)
     setTodoData(filteredTodoData)
   }
 
-  function handleCompleteChange(id: number) {
+  function handleCompleteChange(id: string) {
     setTodoData(todoData.map(
-      (todo: any) => {
+      (todo: TodoData) => {
         if (todo.id === id) {
           todo.completed = !todo.completed
         }
@@ -37,7 +38,7 @@ function List({todoData, setTodoData}: any) {
         <Droppable droppableId={"todo"}>
           {(provided) => (
             <div {...provided.droppableProps} ref={provided.innerRef}>
-              {todoData.map((todo: any, index: number) => (
+              {todoData.map((todo: TodoData, index: number) => (
                 <Draggable
                   key={todo.id}
                   draggableId={todo.id}

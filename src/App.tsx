@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import "./App.css"
 import List from "./components/List";
 import Form from "./components/Form";
+import TodoData from "./types/TodoData";
 
 export default function App() {
 
@@ -20,7 +21,7 @@ export default function App() {
         id: "3",
         title: "게임하기",
         completed: true
-      }] as Array<any>
+      }] as Array<TodoData>
   )
 
   return (
